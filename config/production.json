@@ -1,0 +1,17 @@
+{
+    "db": {
+        "host": "localhost",
+        "port": 3306,
+        "dbname": "test",
+        "username": "root",
+        "password": "root"
+    },
+    "log": {
+        "level": "warn"
+    },
+    "server": {
+        "port": 8081,
+        "controllerRoot": "/xmodel",
+        "modelDir": "src/model/"
+    }
+}
