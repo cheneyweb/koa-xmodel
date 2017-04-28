@@ -1,6 +1,6 @@
 {
   "name": "koa-xmodel",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "极简风格的RESTful无后端中间件，只需要写实体类，然后直接RESTful请求，全自动CRUD",
   "main": "index.js",
   "scripts": {
@@ -8,13 +8,13 @@
   },
   "keywords": [
     "node",
-    "express",
+    "koa",
     "model"
   ],
   "author": "cheneyxu",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.15.2",
+    "koa-router": "^7.0.1",
     "tracer": "^0.8.7"
   }
 }
