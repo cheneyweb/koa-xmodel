@@ -14,21 +14,6 @@ let modelDir = __dirname + config.get('server').modelDir
 // 日志相关
 const log = require('tracer').colorConsole({ level: config.get('log').level })
 
-// 初始化应用服务
-const app = new Koa()
-// 加载中间件
-app.use(async function (ctx, next) {
-	log.info('进入权限控制')
-	if (true) {
-		await next()
-	} else {
-		ctx.body = '权限校验失败'
-	}
-})
-
-// 入参JSON解析
-app.use(bodyParser())
-
 // 首先同步所有实体和数据库
 fs.readdirSync(modelDir).forEach(function (filename) {
 	require(modelDir + filename)
@@ -36,6 +21,11 @@ fs.readdirSync(modelDir).forEach(function (filename) {
 sequelize.sync().then(function () {
 	log.info('xmodel所有实体已同步数据库')
 })
+
+// 初始化应用服务
+const app = new Koa()
+// 入参JSON解析
+app.use(bodyParser())
 
 // 引入koa-xmodel中间件
 xmodel.modelDir = modelDir

@@ -42,7 +42,6 @@
 	├── node_modules
 	├── package.json
 	├── src
-	│   ├── auth
 	│   ├── model
 	│   └── sequelize
 	└── xmodel_modules
@@ -91,3 +90,4 @@ RESTful规则
 更新日志
 >
 	2017.04.29:无后端理念确认，1.0版本推出
+	2017.05.08:xauth模块移入x-koa项目
