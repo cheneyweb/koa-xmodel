@@ -7,11 +7,11 @@
         "password": "root"
     },
     "log": {
-        "level": "warn"
+        "level": "info"
     },
     "server": {
         "port": 8081,
         "controllerRoot": "/xmodel",
-        "modelDir": "src/model/"
+        "modelDir": "/src/model/"
     }
 }
