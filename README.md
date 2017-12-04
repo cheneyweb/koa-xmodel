@@ -30,7 +30,6 @@
 命名规则
 >
 	Model文件名需要以【首字母大写】的【驼峰法】命名，例如应该是UserInfo.js，而不是userInfo.hs或user_info.js
-	RESTful请求url，model名称【下划线分割】
 
 框架目录结构
 >
@@ -59,14 +58,14 @@ RESTful规则
 >
 	以一个用户模块为例，需要对用户进行增删改查:
 	需要注意的是默认自动创建id,createdAt,updatedAt三个字段，无须人工处理
-	[POST]http://host:port/xmodel/user_model/create
+	[POST]http://host:port/xmodel/UserModel/create
 		post body:{"username":"cheney","password":"123"}
-	[POST]http://host:port/xmodel/user_model/update
+	[POST]http://host:port/xmodel/UserModel/update
 		post body:{id:1,"username":"cheney","password":"456"}
-	[POST]http://host:port/xmodel/user_model/query
+	[POST]http://host:port/xmodel/UserModel/query
 		post body:{"username":"cheney","password":"123"}
-	[GET]http://host:port/xmodel/user_model/get/1
-	[GET]http://host:port/xmodel/user_model/destroy/1
+	[GET]http://host:port/xmodel/UserModel/get/1
+	[GET]http://host:port/xmodel/UserModel/destroy/1
 
 框架整合（开源力量）
 >
@@ -92,3 +91,4 @@ RESTful规则
 	2017.05.08:xauth模块移入x-koa项目
 	2017.06.11:重构数据库初始连接方式
 	2017.12.03:升级精简所有依赖，减少中转提升性能
+	2017.12.04:优化返回数据对象

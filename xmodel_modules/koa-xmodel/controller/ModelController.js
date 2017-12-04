@@ -5,15 +5,13 @@ const log = require('tracer').colorConsole()
  * @type {Object}
  */
 let ModelController = {
-    modelDir: __dirname + '/../../../src/model/',
     /**
      * [create 直接插入JSON对象]
      * @param  {[type]} ctx [description]
      * @return {[type]}     [description]
      */
     create: function (ctx) {
-        // 从请求路径中获取Controller名称
-        let Model = require(this.modelDir + ctx.request.modelName)
+        let Model = ctx.request.Model
         let model = ctx.request.body
         return new Promise((resolve, reject) =>
             Model.create(model).then(function (result) {
@@ -31,7 +29,7 @@ let ModelController = {
      * @return {[type]}     [description]
      */
     update: function (ctx) {
-        let Model = require(this.modelDir + ctx.request.modelName)
+        let Model = ctx.request.Model
         let model = ctx.request.body
         let where = { where: { id: model.id } }
         return new Promise((resolve, reject) =>
@@ -49,7 +47,7 @@ let ModelController = {
      * @return {[type]}     [description]
      */
     query: function (ctx) {
-        let Model = require(this.modelDir + ctx.request.modelName)
+        let Model = ctx.request.Model
         let where = { where: ctx.request.body }
         return new Promise((resolve, reject) =>
             Model.findAll(where).then(function (result) {
@@ -66,7 +64,7 @@ let ModelController = {
      * @return {[type]}     [description]
      */
     get: function (ctx) {
-        let Model = require(this.modelDir + ctx.request.modelName)
+        let Model = ctx.request.Model
         let where = { where: { id: ctx.params.id } }
         return new Promise((resolve, reject) =>
             Model.findOne(where).then(function (result) {
@@ -83,7 +81,7 @@ let ModelController = {
      * @return {[type]}     [description]
      */
     destroy: function (ctx) {
-        let Model = require(this.modelDir + ctx.request.modelName)
+        let Model = ctx.request.Model
         let where = { where: { id: ctx.params.id } }
         return new Promise((resolve, reject) =>
             Model.destroy(where).then(function (result) {
