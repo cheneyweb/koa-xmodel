@@ -17,15 +17,15 @@
 
 单独使用x-model中间件(任意koa应用均可集成)
 >
-	1, npm install koa-xmodel --save
+	1, npm install koa-xmodel
 
 	2, let xmodel = require('koa-xmodel')
 
-	3, app.use(mount(controllerRoot, xmodel.routes()))
+	3, xmodel.initConnect(modelDir, sequelize)
 
-	可选设置model文件夹路径，默认路径是 {project}/src/model/
-	
-	xmodel.modelDir = __dirname + '/src/model/'
+	4, app.use(mount(controllerRoot, xmodel.routes()))
+
+	可选设置model文件夹路径，默认路径是 {project}/src/model/	
 
 命名规则
 >
@@ -58,14 +58,14 @@ RESTful规则
 >
 	以一个用户模块为例，需要对用户进行增删改查:
 	需要注意的是默认自动创建id,createdAt,updatedAt三个字段，无须人工处理
-	[POST]http://host:port/xmodel/UserModel/create
+	[POST]http://localhost:port/xmodel/UserModel/create
 		post body:{"username":"cheney","password":"123"}
-	[POST]http://host:port/xmodel/UserModel/update
+	[POST]http://localhost:port/xmodel/UserModel/update
 		post body:{id:1,"username":"cheney","password":"456"}
-	[POST]http://host:port/xmodel/UserModel/query
+	[POST]http://localhost:port/xmodel/UserModel/query
 		post body:{"username":"cheney","password":"123"}
-	[GET]http://host:port/xmodel/UserModel/get/1
-	[GET]http://host:port/xmodel/UserModel/destroy/1
+	[GET]http://localhost:port/xmodel/UserModel/get/1
+	[GET]http://localhost:port/xmodel/UserModel/destroy/1
 
 框架整合（开源力量）
 >
@@ -74,7 +74,6 @@ RESTful规则
     "koa-bodyparser": "^4.2.0",
     "koa-mount": "^3.0.0",
     "koa-router": "^7.3.0",
-    "moment": "^2.19.3",
     "mysql2": "^1.5.1",
     "sequelize": "^4.25.1",
     "tracer": "^0.8.11"
