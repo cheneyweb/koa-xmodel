@@ -4,7 +4,7 @@ const port = config.server.port
 const controllerRoot = config.server.controllerRoot
 // 应用服务相关
 const Koa = require('koa')
-const bodyParser = require('koa-bodyparser')
+const bodyBody = require('koa-body')
 const mount = require('koa-mount')
 const xmodel = require(__dirname + '/xmodel_modules/koa-xmodel/index.js')
 // 持久层相关
@@ -16,7 +16,7 @@ const log = require('tracer').colorConsole({ level: config.log.level })
 // 初始化应用服务
 const app = new Koa()
 // 入参JSON解析
-app.use(bodyParser())
+app.use(bodyBody())
 
 // 引入koa-xmodel中间件
 xmodel.initConnect(modelDir, sequelize)

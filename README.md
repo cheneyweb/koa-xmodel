@@ -67,17 +67,6 @@ RESTful规则
 	[GET]http://localhost:port/xmodel/UserModel/get/1
 	[GET]http://localhost:port/xmodel/UserModel/destroy/1
 
-框架整合（开源力量）
->
-    "config": "^1.28.1",
-    "koa": "^2.4.1",
-    "koa-bodyparser": "^4.2.0",
-    "koa-mount": "^3.0.0",
-    "koa-router": "^7.3.0",
-    "mysql2": "^1.5.1",
-    "sequelize": "^4.25.1",
-    "tracer": "^0.8.11"
-
 帮助联系
 >
 	作者:cheneyxu
@@ -91,3 +80,4 @@ RESTful规则
 	2017.06.11:重构数据库初始连接方式
 	2017.12.03:升级精简所有依赖，减少中转提升性能
 	2017.12.04:优化返回数据对象
+	2017.12.12:更新koa-body
