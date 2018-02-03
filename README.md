@@ -5,7 +5,7 @@
 
 快速上手
 >
-	1, config/default.js 中设置数据库连接，然后执行npm install
+	1, config/default.json 中设置数据库连接，然后执行npm install
 
 	2, node app.js
 
@@ -21,11 +21,9 @@
 
 	2, let xmodel = require('koa-xmodel')
 
-	3, xmodel.initConnect(modelDir, sequelize)
+	3, xmodel.init(app, sequelize, options)
 
-	4, app.use(mount(controllerRoot, xmodel.routes()))
-
-	可选设置model文件夹路径，默认路径是 {project}/src/model/	
+	options可选设置，详见config/default.json
 
 命名规则
 >
@@ -81,3 +79,4 @@ RESTful规则
 	2017.12.03:升级精简所有依赖，减少中转提升性能
 	2017.12.04:优化返回数据对象
 	2017.12.12:更新koa-body
+	2018.02.03:更新所有依赖，增加支持多层中间层业务流转，全新1.0版本发布

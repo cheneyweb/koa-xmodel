@@ -1,14 +1,11 @@
 // 系统配置参数
 const config = require('config')
 const port = config.server.port
-const controllerRoot = config.server.controllerRoot
 // 应用服务相关
 const Koa = require('koa')
 const bodyBody = require('koa-body')
-const mount = require('koa-mount')
 const xmodel = require(__dirname + '/xmodel_modules/koa-xmodel/index.js')
 // 持久层相关
-let modelDir = __dirname + config.server.modelDir
 const sequelize = require(__dirname + '/src/sequelize/sequelize.js')
 // 日志相关
 const log = require('tracer').colorConsole({ level: config.log.level })
@@ -18,9 +15,8 @@ const app = new Koa()
 // 入参JSON解析
 app.use(bodyBody())
 
-// 引入koa-xmodel中间件
-xmodel.initConnect(modelDir, sequelize)
-app.use(mount(controllerRoot, xmodel.routes()))
+// 加载koa-xmodel中间件
+xmodel.init(app, sequelize, config.server) // 初始化mysql连接
 
 // 启动应用服务
 app.listen(port)

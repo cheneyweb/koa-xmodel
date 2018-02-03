@@ -1,5 +1,6 @@
 // 路由相关
 const Router = require('koa-router')
+const mount = require('koa-mount')
 // 初始化路由
 const router = new Router()
 // 控制器加载
@@ -9,16 +10,35 @@ const modelController = require(__dirname + '/controller/ModelController.js')
 const log = require('tracer').colorConsole()
 
 /**
- * 同步所有实体和数据库
+ * 同步所有实体和数据库，加载所有中间件路由
  */
-router.initConnect = function (modelDir, sequelize) {
+router.init = function (app, sequelize, options) {
+    const modelDir = `${process.cwd()}${options.modelDir || '/src/model/'}`
+    const middlewareDir = `${process.cwd()}${options.middlewareDir || '/src/middleware/'}`
+    const controllerRoot = options.xmodelRoot || '/xmodel'
     router.modelArr = []
     fs.readdirSync(modelDir).forEach(function (filename) {
-        router.modelArr[filename.split('.')[0]] = require(modelDir + filename)
+        router.modelArr[filename.split('.')[0]] = require(`${modelDir}${filename}`)
     })
     sequelize.sync().then(function () {
         log.info('xmodel所有实体已同步数据库')
     })
+    fs.readdirSync(middlewareDir).forEach(function (filename) {
+        if (filename.startsWith('pre')) {
+            let router = require(`${middlewareDir}/${filename}`)
+            app.use(mount(controllerRoot, router.routes()))
+        }
+    })
+    log.info('xmodel所有前置路由已加载')
+    app.use(mount(controllerRoot, router.routes()))
+    log.info('xmodel所有执行路由已加载')
+    fs.readdirSync(middlewareDir).forEach(function (filename) {
+        if (filename.startsWith('after')) {
+            let router = require(`${middlewareDir}/${filename}`)
+            app.use(mount(controllerRoot, router.routes()))
+        }
+    })
+    log.info('xmodel所有后置路由已加载')
 }
 
 // 配置路由与Controller方法的绑定
@@ -32,6 +52,7 @@ router.post('/:model_name/create', async function (ctx, next) {
         if (ctx.request.Model) {
             let result = await modelController.create(ctx)
             ctx.body = okRes(result)
+            return next()
         } else {
             ctx.body = errRes(`${ctx.params.model_name}未定义，请检查:model_name是否与model文件名一致`)
         }
@@ -51,6 +72,7 @@ router.post('/:model_name/update', async function (ctx, next) {
         if (ctx.request.Model) {
             let result = await modelController.update(ctx)
             ctx.body = okRes(result)
+            return next()
         } else {
             ctx.body = errRes(`${ctx.params.model_name}未定义，请检查:model_name是否与model文件名一致`)
         }
@@ -69,6 +91,7 @@ router.post('/:model_name/query', async function (ctx, next) {
         if (ctx.request.Model) {
             let result = await modelController.query(ctx)
             ctx.body = okRes(result)
+            return next()
         } else {
             ctx.body = errRes(`${ctx.params.model_name}未定义，请检查:model_name是否与model文件名一致`)
         }
@@ -87,6 +110,7 @@ router.get('/:model_name/destroy/:id', async function (ctx, next) {
         if (ctx.request.Model) {
             let result = await modelController.destroy(ctx)
             ctx.body = okRes(result)
+            return next()
         } else {
             ctx.body = errRes(`${ctx.params.model_name}未定义，请检查:model_name是否与model文件名一致`)
         }
@@ -105,6 +129,7 @@ router.get('/:model_name/get/:id', async function (ctx, next) {
         if (ctx.request.Model) {
             let result = await modelController.get(ctx)
             ctx.body = okRes(result)
+            return next()
         } else {
             ctx.body = errRes(`${ctx.params.model_name}未定义，请检查:model_name是否与model文件名一致`)
         }
